@@ -5,7 +5,6 @@ import assets, { userDummyData } from '../assets/assets'
 function LeftSideBar({userSelected, setUserSelected}) {
 
   const navigate = useNavigate()
-  console.log(userSelected,setUserSelected);
 
   return (
     <div className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${userSelected? 'max-md:hidden' : ''} `}>
@@ -13,7 +12,7 @@ function LeftSideBar({userSelected, setUserSelected}) {
       <div className="pb-5">
 
         <div className="flex justify-between items-center">
-          <img src={assets.logo} alt="logo" className="max-w-40" />
+          <img src={assets.logo_big} alt="logo" className="max-w-10" />
           <div className="relative py-2 group">
             <img src={assets.menu_icon} alt="menu_icon" className="max-h-5 cursor-pointer" />
             <div className='absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-grey-600 text-grey-100 hidden group-hover:block'>
