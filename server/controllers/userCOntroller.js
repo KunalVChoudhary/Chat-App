@@ -52,3 +52,27 @@ export const login = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
    }
 }
+
+//Controller to update user profile
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.id; // Assuming user ID is available in req.user
+        const { profilePic, fullName, bio } = req.body;
+
+        if (!profilePic){
+            const updatedUser = await User.findByIdAndUpdate(userId, {bio, fullName}, { new: true });
+        } else{
+            const uploadedImage = await cloudinary.uploader.upload(profilePic);
+            const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadedImage.secure_url, bio, fullName }, { new: true });
+        }
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.status(200).json({ success: true, message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
