@@ -5,7 +5,7 @@ import {getUserForSidebar, getMessagesBetweenUsers, markMessagesAsSeen} from '..
 const messageRouter = Router();
 
 messageRouter.get('/sidebar-users', protectRoute, getUserForSidebar);
-messageRouter.get('/messages/:userId', protectRoute, getMessagesBetweenUsers);
+messageRouter.get('/user/:userId', protectRoute, getMessagesBetweenUsers);
 messageRouter.put('/mark-seen/:messageId', protectRoute, markMessagesAsSeen);   
 
 export default messageRouter;
