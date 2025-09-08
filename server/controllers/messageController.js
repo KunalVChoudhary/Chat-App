@@ -42,7 +42,7 @@ export const getMessagesBetweenUsers = async (req, res) => {
  export const markMessagesAsSeen = async (req, res) => {
     try {
         const messageId = req.params.messageId;
-        const message = await Message.findByIdAndUpdate(messageId, { seen: true };
+        const message = await Message.findByIdAndUpdate(messageId, { seen: true });
         if (!message) {
             return res.status(404).json({ success: false, message: 'Message not found' });
         }
