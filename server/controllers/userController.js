@@ -76,3 +76,13 @@ export const updateProfile = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 }
+
+//check if user is authenticated
+export const checkAuth = async (req, res) => {
+    try {
+        res.status(200).json({ success: true, message: "User is authenticated", user: req.user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
