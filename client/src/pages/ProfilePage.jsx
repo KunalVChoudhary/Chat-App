@@ -1,18 +1,37 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import assets from '../assets/assets';
+import axios from 'axios';
+import { AuthContext } from '../../context/authContext.jsx';
+import { toast } from 'react-toastify';
 
 function ProfilePage() {
 
+  const { authUser} = useContext(AuthContext)
+
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
-  const [name, setName] = useState('Martin Johnson');
-  const [bio, setBio] = useState('HI i am using chat app');
+  const [name, setName] = useState((authUser && authUser.fullName) || '');
+  const [bio, setBio] = useState((authUser && authUser.bio) || '');
 
   const onSubmitHandler = async (e) => {
     e.preventDefault(); 
+    if (!selectedImage) {
+      const response = await axios.put('/api/user/update-profile', { fullName: name , bio, profilePic: '' });
+      console.log(response);
+      if (response.data.success){toast.success('Profile updated successfully');}else {toast.error('Some error occurred');}
+    }
+    else {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+      reader.onloadend = async () => {
+        const base64data = reader.result;
+        const response = await axios.put('/api/user/update-profile', { fullName: name , bio, profilePic: base64data });
+        if (response.data.success) {toast.success('Profile updated successfully');}else {toast.error('Some error occurred');}
+      } 
+    }
     navigate('/');
-
+    return;
   }
 
   return (
@@ -26,7 +45,7 @@ function ProfilePage() {
           <h3 className="text-lg">Profile Details</h3>
           <label htmlFor="avatar" className='flex items-center gap-3 cursor-pointer'>
             <input onChange={(e)=> setSelectedImage(e.target.files[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden />
-            <img src={selectedImage ? URL.createObjectURL(selectedImage) : assets.avatar_icon} alt=""  className={`w-12 h-12 ${selectedImage && 'rounded-full'}`}/>
+            <img src={selectedImage ? URL.createObjectURL(selectedImage) : authUser?.profilePic || assets.avatar_icon} alt=""  className={`w-15 h-15 rounded-full ${selectedImage && 'rounded-full'}`}/>
             Upload profile image
           </label>
           <input onChange={(e) => setName(e.target.value)} value={name} type="text" required placeholder='Your Name' className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' />
