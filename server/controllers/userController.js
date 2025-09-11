@@ -1,4 +1,7 @@
 import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+import cloudinary from "../lib/cloudinary.js";
+import {generateToken }from "../lib/utils.js";
 
 //Signup a new user
 export const signup = async (req, res) => {
@@ -70,7 +73,7 @@ export const updateProfile = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        res.status(200).json({ success: true, message: "Profile updated successfully", user: updatedUser });
+        res.status(200).json({ success: true, message: "Profile updated successfully", userData: updatedUser });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: error.message });
