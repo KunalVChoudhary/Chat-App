@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 axios.defaults.withCredentials = true;
 
-export const AuthContext = createContext(null);
+const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [authUser, setAuthUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
     newSocket.connect();
     setSocket(newSocket);
 
-    newSocket.on("getOnlineUsers", (users) => {
+    newSocket.on("online-users", (users) => {
       setOnlineUsers(users);
     });
   };
@@ -131,3 +131,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
+export { AuthContext};
