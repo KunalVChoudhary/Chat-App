@@ -62,6 +62,13 @@ export const sendMessage = async (req, res) => {
         const senderId = req.user._id;
         const receiverId = req.params.userId;
         const {text,image} = req.body;
+
+        if (!text?.trim() && !image) {
+            return res.status(400).json({
+                success: false,
+                message: 'Message must contain text or an image.'
+            });
+        }
         let imageUrl;
         if(image){
             //image is in base64 format
@@ -72,7 +79,7 @@ export const sendMessage = async (req, res) => {
         const newMessage = new Message({
             senderId,
             receiverId,
-            text,
+            text: text?.trim() || '',
             image: imageUrl
         });
         await newMessage.save();
