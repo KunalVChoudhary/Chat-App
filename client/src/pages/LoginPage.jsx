@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import { useState, useContext } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/authContext';
 
 function LoginPage() {
 
@@ -14,6 +15,8 @@ function LoginPage() {
 
   const [termsAccepted, setTermsAccepted] = useState(false);
 
+  const {login} = useContext(AuthContext);
+
   const onChangeFormData = (e) => {
     setUserInfo((prev) => ({...prev, [e.target.name]: e.target.value}))
   }
@@ -24,7 +27,7 @@ function LoginPage() {
       alert("Please accept the terms and conditions to proceed.");
       return;
     }
-    console.log(userInfo);
+    login(currState=== 'Sign up' ? 'signup' : 'login', userInfo);
   }
 
   return (
