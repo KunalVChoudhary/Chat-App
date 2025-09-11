@@ -6,7 +6,16 @@ import ProfilePage from './pages/ProfilePage'
 import { AuthContext } from '../context/authContext'
 
 function App() {
-  const {authUser} = useContext(AuthContext)
+  const {authUser, authLoading} = useContext(AuthContext)
+
+  if (authLoading) {
+    // show a loader / splash screen while auth state is being resolved
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
+  } 
   return (
     <div className="bg-[url('./assets/bgimage.png')] bg-cover">
       <Routes>
