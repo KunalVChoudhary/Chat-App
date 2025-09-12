@@ -26,7 +26,10 @@ function LeftSideBar() {
       <div className="pb-5">
 
         <div className="flex justify-between items-center">
-          <img src={assets.logo_big} alt="logo" className="max-w-10" />
+          <div className="flex items-center gap-2">
+            <img src={assets.logo_big} alt="logo" className="max-w-12" />
+            <p className="text-sm text-gray-400">Do Chat</p>
+          </div>
           <div className="relative py-2 group">
             <img src={assets.menu_icon} alt="menu_icon" className="max-h-5 cursor-pointer" />
             <div className='absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-grey-600 text-grey-100 hidden group-hover:block'>
@@ -37,7 +40,7 @@ function LeftSideBar() {
           </div>
         </div>
 
-        <div className=" bg-[#282142] rounded-full flex items-center gap-2 py-3 px-4 mt-5">
+        <div className=" bg-[#282142] rounded-full flex items-center gap-2 py-3 px-4 mt-2">
           <img src={assets.search_icon} alt="search" className="w-3" />
           <input value={input} onChange={(e) => setInput(e.target.value)} type="text" className="bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1" placeholder='Search User ...' />
         </div>

@@ -22,9 +22,9 @@ function ChatBox() {
 
   useEffect(()=>{
     if (scrollEnd.current){
-      scrollEnd.current.scrollIntoView({behaviour : smooth})
+      scrollEnd.current.scrollIntoView({behaviour : "smooth"})
     }
-  },[])
+  },[messages])
 
   const handleSendMessage = async() => {
     if (inputMessage.trim() === '') return;
@@ -82,6 +82,7 @@ function ChatBox() {
           </div>
           </div>)
         })}
+        
         <div ref={scrollEnd}></div>
       </div>
 
