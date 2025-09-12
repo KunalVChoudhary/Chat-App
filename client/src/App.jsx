@@ -11,7 +11,7 @@ function App() {
   if (authLoading) {
     // show a loader / splash screen while auth state is being resolved
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen bg-[url('./assets/bgimage.png')] bg-cover">
         <p className="text-xl">Loading...</p>
       </div>
     );

@@ -18,7 +18,6 @@ function ProfilePage() {
     e.preventDefault(); 
     if (!selectedImage) {
       const response = await axios.put('/api/user/update-profile', { fullName: name , bio, profilePic: '' });
-      console.log(response);
       if (response.data.success){toast.success('Profile updated successfully');}else {toast.error('Some error occurred');}
     }
     else {

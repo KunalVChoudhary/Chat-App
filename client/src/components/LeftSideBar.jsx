@@ -17,7 +17,6 @@ function LeftSideBar() {
 
   useEffect(()=>{
     getUsers()
-    console.log(onlineUsers)
   },[onlineUsers])
 
   return (

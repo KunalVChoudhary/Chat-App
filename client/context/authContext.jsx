@@ -16,7 +16,6 @@ const AuthProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
 
   const checkAuth = async () => {
-    console.log("🔍 Checking auth...");
     try {
       const { data } = await axios.get("/api/user/auth/check");
       if (data?.success) {
@@ -24,7 +23,6 @@ const AuthProvider = ({ children }) => {
         connectSocket(data.user);
       }
     } catch (error) {
-      console.log("❌ Auth error:", error.response?.data || error.message);
       localStorage.removeItem("token");
     } finally {
       setAuthLoading(false);
@@ -40,11 +38,10 @@ const AuthProvider = ({ children }) => {
         connectSocket(data.userData);
         localStorage.setItem("token", data.token);
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
-        console.log(data, token, authUser, axios.defaults.headers.common["Authorization"]);
         toast.success(data.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Some error occurred");
     }
   };
@@ -62,7 +59,7 @@ const AuthProvider = ({ children }) => {
       delete axios.defaults.headers.common["Authorization"];
       toast.success("Logged out successfully");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Some error occurred");
     }
   };
@@ -75,7 +72,7 @@ const AuthProvider = ({ children }) => {
         toast.success(data.message);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Some error occurred");
     }
   };
